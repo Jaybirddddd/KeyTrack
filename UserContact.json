@@ -1,0 +1,42 @@
+{
+  "name": "UserContact",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "User's email address"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "role": {
+      "type": "string",
+      "description": "User role"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": true,
+    "read": true,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.email": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
