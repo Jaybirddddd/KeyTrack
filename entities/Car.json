@@ -1,0 +1,175 @@
+{
+  "name": "Car",
+  "type": "object",
+  "properties": {
+    "year": {
+      "type": "number",
+      "description": "Model year"
+    },
+    "make": {
+      "type": "string",
+      "description": "Car manufacturer"
+    },
+    "model": {
+      "type": "string",
+      "description": "Car model"
+    },
+    "series": {
+      "type": "string",
+      "description": "Series / trim level"
+    },
+    "series_detail": {
+      "type": "string",
+      "description": "Additional series detail (e.g. 4MATIC)"
+    },
+    "body": {
+      "type": "string",
+      "description": "Body style (e.g. 4D Sport Utility)"
+    },
+    "vin": {
+      "type": "string",
+      "description": "Vehicle Identification Number"
+    },
+    "stock_number": {
+      "type": "string",
+      "description": "Dealership stock number"
+    },
+    "color": {
+      "type": "string",
+      "description": "Exterior color"
+    },
+    "interior": {
+      "type": "string",
+      "description": "Interior description"
+    },
+    "mileage": {
+      "type": "number",
+      "description": "Current mileage"
+    },
+    "age": {
+      "type": "number",
+      "description": "Days in inventory"
+    },
+    "price": {
+      "type": "number",
+      "description": "Asking price"
+    },
+    "certified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the vehicle is certified pre-owned"
+    },
+    "exit_strategy": {
+      "type": "string",
+      "enum": [
+        "R",
+        "W"
+      ],
+      "description": "Exit strategy: R = Retail, W = Wholesale"
+    },
+    "disp": {
+      "type": "string",
+      "enum": [
+        "SOLD",
+        "Service",
+        "Detail",
+        "Service-Out",
+        "Transit",
+        "Needs Work",
+        "Auction",
+        "Demo"
+      ],
+      "description": "Current vehicle disposition"
+    },
+    "location": {
+      "type": "string",
+      "description": "Custom note about where the vehicle is located"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "sold",
+        "pending",
+        "service"
+      ],
+      "default": "available",
+      "description": "Current status of the vehicle"
+    },
+    "key_status": {
+      "type": "string",
+      "enum": [
+        "in",
+        "out"
+      ],
+      "default": "in",
+      "description": "Whether the key is checked in or out"
+    },
+    "key_holder": {
+      "type": "string",
+      "description": "Person currently holding the key"
+    },
+    "needs_gas": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the vehicle needs gas"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the vehicle"
+    }
+  },
+  "required": [
+    "year",
+    "make",
+    "model",
+    "stock_number"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": true,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "salesperson"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "porter"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "vendor"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "detail_team"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "service_team"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

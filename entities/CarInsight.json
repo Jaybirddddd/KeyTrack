@@ -1,0 +1,73 @@
+{
+  "name": "CarInsight",
+  "type": "object",
+  "properties": {
+    "car_id": {
+      "type": "string",
+      "description": "Reference to the car"
+    },
+    "stock_number": {
+      "type": "string",
+      "description": "Stock number for quick reference"
+    },
+    "car_label": {
+      "type": "string",
+      "description": "Year Make Model display label"
+    },
+    "note": {
+      "type": "string",
+      "description": "The insight note \u2014 recent work done, things to watch, status update"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "update",
+        "watch_out",
+        "ready"
+      ],
+      "default": "update",
+      "description": "Type of insight"
+    }
+  },
+  "required": [
+    "car_id",
+    "note"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$nin": [
+            "vendor",
+            "porter"
+          ]
+        }
+      }
+    },
+    "read": true,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    }
+  }
+}

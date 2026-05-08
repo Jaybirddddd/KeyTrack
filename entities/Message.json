@@ -1,0 +1,100 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Message text content"
+    },
+    "sender_email": {
+      "type": "string",
+      "description": "Email of the sender"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Display name of the sender"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Channel identifier: 'group' for group chat, or a DM key like 'dm:email1:email2' (sorted)"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "For DMs: the recipient's email. Empty for group messages."
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL of an attached file"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "Original filename of the attachment"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "MIME type of the attachment"
+    }
+  },
+  "required": [
+    "content",
+    "sender_email",
+    "channel"
+  ],
+  "rls": {
+    "create": true,
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.channel": "group"
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        },
+        {
+          "data.recipient_email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.sender_email": "{{user.email}}"
+        }
+      ]
+    }
+  }
+}

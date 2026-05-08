@@ -1,0 +1,58 @@
+{
+  "name": "RepairOrder",
+  "type": "object",
+  "properties": {
+    "car_id": {
+      "type": "string",
+      "description": "Reference to the car"
+    },
+    "stock_number": {
+      "type": "string",
+      "description": "Stock number for quick reference"
+    },
+    "car_label": {
+      "type": "string",
+      "description": "Year Make Model display label"
+    },
+    "repair_date": {
+      "type": "string",
+      "description": "Date of the repair (MM/DD/YYYY)"
+    },
+    "ro_number": {
+      "type": "string",
+      "description": "Repair order number"
+    },
+    "services_performed": {
+      "type": "string",
+      "description": "Summary of services performed"
+    },
+    "total_cost": {
+      "type": "number",
+      "description": "Total cost of the repair order"
+    }
+  },
+  "required": [
+    "car_id",
+    "repair_date",
+    "services_performed",
+    "total_cost"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": true,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

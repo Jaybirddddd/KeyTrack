@@ -1,0 +1,81 @@
+{
+  "name": "LostKey",
+  "type": "object",
+  "properties": {
+    "key_number": {
+      "type": "string",
+      "description": "Physical key identifier or number"
+    },
+    "location": {
+      "type": "string",
+      "description": "Where the key is stored (e.g., desk, drawer, box)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Any details about what the key might be for"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unmatched",
+        "matched",
+        "archived"
+      ],
+      "default": "unmatched",
+      "description": "Status of the lost key"
+    }
+  },
+  "required": [
+    "key_number"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "$or": [
+          {
+            "role": "admin"
+          },
+          {
+            "role": "porter"
+          }
+        ]
+      }
+    },
+    "read": {
+      "user_condition": {
+        "$or": [
+          {
+            "role": "admin"
+          },
+          {
+            "role": "porter"
+          }
+        ]
+      }
+    },
+    "update": {
+      "user_condition": {
+        "$or": [
+          {
+            "role": "admin"
+          },
+          {
+            "role": "porter"
+          }
+        ]
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "$or": [
+          {
+            "role": "admin"
+          },
+          {
+            "role": "porter"
+          }
+        ]
+      }
+    }
+  }
+}
